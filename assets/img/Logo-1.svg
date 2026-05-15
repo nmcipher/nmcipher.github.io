@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="1000" viewBox="0 0 1000 1000" fill="none">
+  <!-- Transparent background: no background rectangle -->
+  <path fill="#000000" d="M210 750V250L585 625V742L285 442V750H210Z"/>
+  <path fill="#000000" d="M430 335V250L680 500L855 325V750H780V450L680 550L430 335Z"/>
+</svg>

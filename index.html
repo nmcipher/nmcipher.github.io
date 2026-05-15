@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ndukwe Michael | Portfolio</title>
+  <link id="favicon" rel="icon" type="image/svg+xml" href="assets/img/favicon-dark.svg">
+  <script>
+    (function () {
+      function setFavicon(theme) {
+        var favicon = document.getElementById('favicon');
+        if (!favicon) return;
+        favicon.href = theme === 'light' ? 'assets/img/favicon-light.svg' : 'assets/img/favicon-dark.svg';
+      }
+
+      try {
+        var savedTheme = localStorage.getItem('theme');
+        var systemPrefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+        var theme = (savedTheme === 'light' || savedTheme === 'dark')
+          ? savedTheme
+          : (systemPrefersLight ? 'light' : 'dark');
+        document.documentElement.dataset.theme = theme;
+        setFavicon(theme);
+      } catch (error) {
+        document.documentElement.dataset.theme = 'dark';
+        setFavicon('dark');
+      }
+    })();
+  </script>
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+  <canvas id="particles"></canvas>
+
+  <nav id="navbar">
+    <a href="#home" class="nav-logo" aria-label="Go to home">
+      <img src="assets/img/Logo-1.svg" alt="" aria-hidden="true" class="nav-logo-image logo-on-light">
+      <img src="assets/img/Logo-2.svg" alt="" aria-hidden="true" class="nav-logo-image logo-on-dark">
+    </a>
+    <ul class="nav-links">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button type="button" class="theme-toggle" id="themeToggle" aria-label="Switch theme" aria-pressed="false">
+        <i class="fas fa-sun" aria-hidden="true"></i>
+      </button>
+      <div class="hamburger" id="hamburger">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </nav>
+
+  <section id="home" class="section hero">
+    <div class="hero-content">
+      <p class="hero-greeting animate-up">Hello, I'm</p>
+      <h1 class="hero-name animate-up">Ndukwe Michael</h1>
+      <div class="hero-title animate-up">
+        <span>I'm a </span><span class="typed" id="typed"></span><span class="cursor">|</span>
+      </div>
+      <p class="hero-desc animate-up">Cybersecurity and Network Technology student focused on secure systems, networking, Linux, web development, and practical digital solutions.</p>
+      <div class="hero-buttons animate-up">
+        <a href="#projects" class="btn btn-primary">View My Work</a>
+        <a href="#contact" class="btn btn-outline">Get In Touch</a>
+      </div>
+      <div class="hero-social animate-up">
+        <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+        <a href="#" aria-label="Twitter"><i class="fab fa-x-twitter"></i></a>
+        <a href="#" aria-label="Dribbble"><i class="fab fa-dribbble"></i></a>
+      </div>
+    </div>
+    <div class="hero-image animate-up">
+      <div class="hero-img-wrapper">
+        <img src="assets/img/profile.JPG" alt="Profile">
+        <div class="hero-img-ring"></div>
+      </div>
+    </div>
+    <a href="#about" class="scroll-indicator animate-up">
+      <div class="mouse">
+        <div class="wheel"></div>
+      </div>
+    </a>
+  </section>
+
+  <section id="about" class="section">
+    <h2 class="section-title animate-on-scroll">About Me</h2>
+    <div class="about-grid">
+      <div class="about-image animate-on-scroll">
+        <img src="assets/img/profile.JPG" alt="Profile portrait">
+        <div class="about-image-border"></div>
+      </div>
+      <div class="about-content">
+        <p class="animate-on-scroll">I am Ndukwe Michael Okorie Junior, a Cybersecurity and Network Technology student passionate about building secure, practical, and user-focused digital solutions. My interests span cybersecurity, networking, Linux systems, web development, and modern technology.</p>
+        <p class="animate-on-scroll">I enjoy working on real projects that push me to think critically, solve technical problems, and keep improving my skills. Whether I am setting up systems, troubleshooting issues, designing websites, or learning new security concepts, I approach the work with creativity, attention to detail, and a focus on useful, secure, and reliable results.</p>
+        <div class="about-stats animate-on-scroll">
+          <div class="stat">
+            <span class="stat-number" data-target="5">0</span><span class="stat-plus">+</span>
+            <span class="stat-label">Tech Interests</span>
+          </div>
+          <div class="stat">
+            <span class="stat-number" data-target="3">0</span><span class="stat-plus">+</span>
+            <span class="stat-label">Solution Goals</span>
+          </div>
+          <div class="stat">
+            <span class="stat-number" data-target="4">0</span><span class="stat-plus">+</span>
+            <span class="stat-label">Key Strengths</span>
+          </div>
+          <div class="stat">
+            <span class="stat-number" data-target="6">0</span><span class="stat-plus">+</span>
+            <span class="stat-label">Core Values</span>
+          </div>
+        </div>
+        <a href="#contact" class="btn btn-primary animate-on-scroll">Let's Talk</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="skills" class="section">
+    <h2 class="section-title animate-on-scroll">My Skills</h2>
+    <div class="skills-grid">
+      <div class="skill-card animate-on-scroll">
+        <div class="skill-icon"><i class="fab fa-html5"></i></div>
+        <h3>HTML5</h3>
+        <div class="skill-bar"><div class="skill-fill" data-width="95"></div></div>
+      </div>
+      <div class="skill-card animate-on-scroll">
+        <div class="skill-icon"><i class="fab fa-css3-alt"></i></div>
+        <h3>CSS3</h3>
+        <div class="skill-bar"><div class="skill-fill" data-width="90"></div></div>
+      </div>
+      <div class="skill-card animate-on-scroll">
+        <div class="skill-icon"><i class="fab fa-js-square"></i></div>
+        <h3>JavaScript</h3>
+        <div class="skill-bar"><div class="skill-fill" data-width="88"></div></div>
+      </div>
+      <div class="skill-card animate-on-scroll">
+        <div class="skill-icon"><i class="fab fa-react"></i></div>
+        <h3>React</h3>
+        <div class="skill-bar"><div class="skill-fill" data-width="85"></div></div>
+      </div>
+      <div class="skill-card animate-on-scroll">
+        <div class="skill-icon"><i class="fab fa-node-js"></i></div>
+        <h3>Node.js</h3>
+        <div class="skill-bar"><div class="skill-fill" data-width="80"></div></div>
+      </div>
+      <div class="skill-card animate-on-scroll">
+        <div class="skill-icon"><i class="fab fa-python"></i></div>
+        <h3>Python</h3>
+        <div class="skill-bar"><div class="skill-fill" data-width="75"></div></div>
+      </div>
+      <div class="skill-card animate-on-scroll">
+        <div class="skill-icon"><i class="fab fa-git-alt"></i></div>
+        <h3>Git</h3>
+        <div class="skill-bar"><div class="skill-fill" data-width="85"></div></div>
+      </div>
+      <div class="skill-card animate-on-scroll">
+        <div class="skill-icon"><i class="fas fa-database"></i></div>
+        <h3>PostgreSQL</h3>
+        <div class="skill-bar"><div class="skill-fill" data-width="78"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects" class="section">
+    <h2 class="section-title animate-on-scroll">Featured Projects</h2>
+    <div class="projects-grid">
+      <article class="project-card animate-on-scroll">
+        <div class="project-image">
+          <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=400&fit=crop" alt="Dashboard App">
+          <div class="project-overlay">
+            <a href="#" class="project-link" aria-label="View live"><i class="fas fa-external-link-alt"></i></a>
+            <a href="#" class="project-link" aria-label="View code"><i class="fab fa-github"></i></a>
+          </div>
+        </div>
+        <div class="project-info">
+          <h3>Analytics Dashboard</h3>
+          <p>Real-time data visualization platform with interactive charts and customizable widgets.</p>
+          <div class="project-tags">
+            <span>React</span><span>D3.js</span><span>Node.js</span>
+          </div>
+        </div>
+      </article>
+      <article class="project-card animate-on-scroll">
+        <div class="project-image">
+          <img src="https://images.unsplash.com/photo-1556742049-0cfed4606f1b?w=600&h=400&fit=crop" alt="E-Commerce App">
+          <div class="project-overlay">
+            <a href="#" class="project-link" aria-label="View live"><i class="fas fa-external-link-alt"></i></a>
+            <a href="#" class="project-link" aria-label="View code"><i class="fab fa-github"></i></a>
+          </div>
+        </div>
+        <div class="project-info">
+          <h3>E-Commerce Platform</h3>
+          <p>Full-stack storefront with payment processing, inventory management, and admin panel.</p>
+          <div class="project-tags">
+            <span>Next.js</span><span>Stripe</span><span>PostgreSQL</span>
+          </div>
+        </div>
+      </article>
+      <article class="project-card animate-on-scroll">
+        <div class="project-image">
+          <img src="https://images.unsplash.com/photo-1611746872914-6a836b5c3f8f?w=600&h=400&fit=crop" alt="Chat App">
+          <div class="project-overlay">
+            <a href="#" class="project-link" aria-label="View live"><i class="fas fa-external-link-alt"></i></a>
+            <a href="#" class="project-link" aria-label="View code"><i class="fab fa-github"></i></a>
+          </div>
+        </div>
+        <div class="project-info">
+          <h3>Messaging App</h3>
+          <p>Real-time chat application with rooms, file sharing, and end-to-end encryption.</p>
+          <div class="project-tags">
+            <span>Socket.io</span><span>Express</span><span>MongoDB</span>
+          </div>
+        </div>
+      </article>
+      <article class="project-card animate-on-scroll">
+        <div class="project-image">
+          <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop" alt="AI Tool">
+          <div class="project-overlay">
+            <a href="#" class="project-link" aria-label="View live"><i class="fas fa-external-link-alt"></i></a>
+            <a href="#" class="project-link" aria-label="View code"><i class="fab fa-github"></i></a>
+          </div>
+        </div>
+        <div class="project-info">
+          <h3>AI Content Generator</h3>
+          <p>AI-powered tool that generates marketing copy, blog posts, and social media content.</p>
+          <div class="project-tags">
+            <span>Python</span><span>FastAPI</span><span>React</span>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section id="contact" class="section">
+    <h2 class="section-title animate-on-scroll">Get In Touch</h2>
+    <div class="contact-grid">
+      <div class="contact-info animate-on-scroll">
+        <h3>Let's connect</h3>
+        <p>If you'd like to connect, collaborate, or talk about technology, feel free to use the form below. I am always open to learning, growth, and building practical solutions.</p>
+        <div class="contact-detail">
+          <i class="fas fa-envelope"></i>
+          <span>Reach me through the contact form below</span>
+        </div>
+        <div class="contact-detail">
+          <i class="fas fa-map-marker-alt"></i>
+          <span>Location available on request</span>
+        </div>
+        <div class="contact-social">
+          <a href="#"><i class="fab fa-github"></i></a>
+          <a href="#"><i class="fab fa-linkedin-in"></i></a>
+          <a href="#"><i class="fab fa-x-twitter"></i></a>
+        </div>
+      </div>
+      <form class="contact-form animate-on-scroll" id="contactForm">
+        <div class="form-group">
+          <input type="text" id="name" required placeholder=" ">
+          <label for="name">Your Name</label>
+        </div>
+        <div class="form-group">
+          <input type="email" id="email" required placeholder=" ">
+          <label for="email">Your Email</label>
+        </div>
+        <div class="form-group">
+          <input type="text" id="subject" required placeholder=" ">
+          <label for="subject">Subject</label>
+        </div>
+        <div class="form-group">
+          <textarea id="message" rows="5" required placeholder=" "></textarea>
+          <label for="message">Message</label>
+        </div>
+        <button type="submit" class="btn btn-primary btn-submit">
+          <span>Send Message</span>
+          <i class="fas fa-paper-plane"></i>
+        </button>
+      </form>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2026 Ndukwe Michael Okorie Junior. Built with purpose and attention to detail.</p>
+  </footer>
+
+  <script src="assets/js/script.js"></script>
+</body>
+</html>
