@@ -3,10 +3,32 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ndukwe Michael | Portfolio</title>
+  <title>Ndukwe Michael | Cybersecurity & Network Technology Portfolio</title>
+  <meta name="description" content="Portfolio of Ndukwe Michael Okorie Junior, a Cybersecurity and Network Technology student focused on secure systems, networking, Linux, web development, and practical digital solutions.">
+  <meta name="author" content="Ndukwe Michael Okorie Junior">
+  <meta name="keywords" content="Ndukwe Michael, Ndukwe Michael Okorie Junior, portfolio, cybersecurity, network technology, Linux, web development, secure systems">
+  <meta name="robots" content="index, follow">
+  <meta name="color-scheme" content="dark light">
+  <meta id="themeColorMeta" name="theme-color" content="#0a0a0f">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Ndukwe Michael Portfolio">
+  <meta property="og:title" content="Ndukwe Michael | Cybersecurity & Network Technology Portfolio">
+  <meta property="og:description" content="Explore the portfolio of Ndukwe Michael Okorie Junior, featuring cybersecurity, networking, Linux, and web development work.">
+  <meta property="og:image" content="assets/img/profile.JPG">
+  <meta property="og:image:alt" content="Portrait of Ndukwe Michael Okorie Junior">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Ndukwe Michael | Cybersecurity & Network Technology Portfolio">
+  <meta name="twitter:description" content="Cybersecurity, networking, Linux, and web development projects by Ndukwe Michael Okorie Junior.">
+  <meta name="twitter:image" content="assets/img/profile.JPG">
   <link id="favicon" rel="icon" type="image/svg+xml" href="assets/img/favicon-dark.svg">
   <script>
     (function () {
+      function setThemeColor(theme) {
+        var themeColorMeta = document.getElementById('themeColorMeta');
+        if (!themeColorMeta) return;
+        themeColorMeta.content = theme === 'light' ? '#f4f7fb' : '#0a0a0f';
+      }
+
       function setFavicon(theme) {
         var favicon = document.getElementById('favicon');
         if (!favicon) return;
@@ -20,9 +42,11 @@
           ? savedTheme
           : (systemPrefersLight ? 'light' : 'dark');
         document.documentElement.dataset.theme = theme;
+        setThemeColor(theme);
         setFavicon(theme);
       } catch (error) {
         document.documentElement.dataset.theme = 'dark';
+        setThemeColor('dark');
         setFavicon('dark');
       }
     })();

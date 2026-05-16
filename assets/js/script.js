@@ -4,6 +4,7 @@ const themeToggle = document.getElementById('themeToggle');
 const themeIcon = themeToggle.querySelector('i');
 const themeQuery = window.matchMedia('(prefers-color-scheme: light)');
 const favicon = document.getElementById('favicon');
+const themeColorMeta = document.getElementById('themeColorMeta');
 
 function getSavedTheme() {
   const savedTheme = localStorage.getItem('theme');
@@ -13,6 +14,11 @@ function getSavedTheme() {
 function updateFavicon(theme) {
   if (!favicon) return;
   favicon.href = theme === 'light' ? 'assets/img/favicon-light.svg' : 'assets/img/favicon-dark.svg';
+}
+
+function updateThemeColor(theme) {
+  if (!themeColorMeta) return;
+  themeColorMeta.content = theme === 'light' ? '#f4f7fb' : '#0a0a0f';
 }
 
 function updateThemeUi(theme) {
@@ -26,6 +32,7 @@ function applyTheme(theme, persist = true) {
   root.dataset.theme = theme;
   updateThemeUi(theme);
   updateFavicon(theme);
+  updateThemeColor(theme);
   if (persist) localStorage.setItem('theme', theme);
 }
 
