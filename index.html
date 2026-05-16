@@ -281,27 +281,29 @@
           <a href="#"><i class="fab fa-x-twitter"></i></a>
         </div>
       </div>
-      <form class="contact-form animate-on-scroll" id="contactForm">
+      <form class="contact-form animate-on-scroll" id="contactForm" action="https://formspree.io/f/mqewzoby" method="POST">
         <div class="form-group">
-          <input type="text" id="name" required placeholder=" ">
+          <input type="text" id="name" name="name" required placeholder=" " autocomplete="name">
           <label for="name">Your Name</label>
         </div>
         <div class="form-group">
-          <input type="email" id="email" required placeholder=" ">
+          <input type="email" id="email" name="email" required placeholder=" " autocomplete="email">
           <label for="email">Your Email</label>
         </div>
         <div class="form-group">
-          <input type="text" id="subject" required placeholder=" ">
+          <input type="text" id="subject" name="subject" required placeholder=" " autocomplete="off">
           <label for="subject">Subject</label>
         </div>
         <div class="form-group">
-          <textarea id="message" rows="5" required placeholder=" "></textarea>
+          <textarea id="message" name="message" rows="5" required placeholder=" "></textarea>
           <label for="message">Message</label>
         </div>
+        <input type="hidden" name="_subject" value="New portfolio message">
         <button type="submit" class="btn btn-primary btn-submit">
           <span>Send Message</span>
           <i class="fas fa-paper-plane"></i>
         </button>
+        <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
       </form>
     </div>
   </section>

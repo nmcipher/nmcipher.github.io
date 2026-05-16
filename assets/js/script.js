@@ -232,21 +232,83 @@ const observer = new IntersectionObserver((entries) => {
 document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
 
 // ── Contact Form ──
-document.getElementById('contactForm').addEventListener('submit', e => {
-  e.preventDefault();
-  const btn = e.target.querySelector('.btn-submit');
-  const span = btn.querySelector('span');
-  const icon = btn.querySelector('i');
-  span.textContent = 'Sent!';
-  icon.className = 'fas fa-check';
-  btn.style.background = '#22c55e';
-  setTimeout(() => {
-    span.textContent = 'Send Message';
-    icon.className = 'fas fa-paper-plane';
-    btn.style.background = '';
-    e.target.reset();
-  }, 2500);
-});
+const contactForm = document.getElementById('contactForm');
+
+if (contactForm) {
+  const submitBtn = contactForm.querySelector('.btn-submit');
+  const submitLabel = submitBtn.querySelector('span');
+  const submitIcon = submitBtn.querySelector('i');
+  const formStatus = document.getElementById('formStatus');
+  const defaultButtonLabel = 'Send Message';
+
+  function setFormStatus(message, type = '') {
+    formStatus.textContent = message;
+    formStatus.className = 'form-status';
+    if (type) formStatus.classList.add(`is-${type}`);
+  }
+
+  function setSubmittingState(isSubmitting) {
+    submitBtn.disabled = isSubmitting;
+    submitLabel.textContent = isSubmitting ? 'Sending...' : defaultButtonLabel;
+    submitIcon.className = isSubmitting ? 'fas fa-spinner fa-spin' : 'fas fa-paper-plane';
+  }
+
+  contactForm.addEventListener('submit', async event => {
+    event.preventDefault();
+
+    if (!navigator.onLine) {
+      setFormStatus('No internet connection. Please reconnect and try again.', 'error');
+      return;
+    }
+
+    setSubmittingState(true);
+    setFormStatus('');
+
+    try {
+      const response = await fetch(contactForm.action, {
+        method: contactForm.method,
+        body: new FormData(contactForm),
+        headers: {
+          Accept: 'application/json'
+        }
+      });
+
+      const result = await response.json().catch(() => ({}));
+
+      if (response.ok) {
+        contactForm.reset();
+        setFormStatus('Message sent successfully. Thanks for reaching out.', 'success');
+        return;
+      }
+
+      if (response.status === 429) {
+        setFormStatus('Sending is temporarily blocked. Please wait a moment and try again.', 'error');
+        return;
+      }
+
+      if (Array.isArray(result.errors) && result.errors.length > 0) {
+        const hasBlockedError = result.errors.some(error => {
+          const message = String(error.message || '').toLowerCase();
+          return message.includes('blocked') || message.includes('spam') || message.includes('rate');
+        });
+
+        if (hasBlockedError) {
+          setFormStatus('Sending was blocked for safety reasons. Please try again in a little while.', 'error');
+          return;
+        }
+
+        setFormStatus(result.errors.map(error => error.message).join(' '), 'error');
+        return;
+      }
+
+      setFormStatus('Your message could not be sent right now. Please try again shortly.', 'error');
+    } catch (error) {
+      setFormStatus('Unable to send your message right now. Please check your connection and try again.', 'error');
+    } finally {
+      setSubmittingState(false);
+    }
+  });
+}
 
 // ── SmoothScroll for older browsers ──
 document.querySelectorAll('a[href^="#"]').forEach(a => {
