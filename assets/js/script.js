@@ -172,7 +172,7 @@ const navLinks = document.querySelectorAll('.nav-links a');
 const hamburger = document.getElementById('hamburger');
 const navUl = document.querySelector('.nav-links');
 
-function updateNavbarState() {
+window.addEventListener('scroll', () => {
   navbar.classList.toggle('scrolled', window.scrollY > 50);
 
   let current = '';
@@ -184,35 +184,19 @@ function updateNavbarState() {
     link.classList.remove('active');
     if (link.getAttribute('href') === '#' + current) link.classList.add('active');
   });
-}
-
-function setMenuState(isOpen) {
-  hamburger.classList.toggle('active', isOpen);
-  hamburger.setAttribute('aria-expanded', String(isOpen));
-  navUl.classList.toggle('open', isOpen);
-  navbar.classList.toggle('menu-open', isOpen);
-  document.body.classList.toggle('menu-open', isOpen);
-}
+});
 
 hamburger.addEventListener('click', () => {
-  setMenuState(!navUl.classList.contains('open'));
+  hamburger.classList.toggle('active');
+  navUl.classList.toggle('open');
 });
 
 navLinks.forEach(link => {
   link.addEventListener('click', () => {
-    setMenuState(false);
+    hamburger.classList.remove('active');
+    navUl.classList.remove('open');
   });
 });
-
-window.addEventListener('scroll', updateNavbarState);
-window.addEventListener('resize', () => {
-  if (window.innerWidth > 768 && navUl.classList.contains('open')) setMenuState(false);
-});
-document.addEventListener('keydown', event => {
-  if (event.key === 'Escape' && navUl.classList.contains('open')) setMenuState(false);
-});
-
-updateNavbarState();
 
 // ── Scroll Animations ──
 const observer = new IntersectionObserver((entries) => {
