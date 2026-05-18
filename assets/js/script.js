@@ -189,12 +189,17 @@ window.addEventListener('scroll', () => {
 hamburger.addEventListener('click', () => {
   hamburger.classList.toggle('active');
   navUl.classList.toggle('open');
+  const isOpen = navUl.classList.contains('open');
+  document.body.style.overflow = isOpen ? 'hidden' : '';
+  navbar.classList.toggle('nav-open', isOpen);
 });
 
 navLinks.forEach(link => {
   link.addEventListener('click', () => {
     hamburger.classList.remove('active');
     navUl.classList.remove('open');
+    document.body.style.overflow = '';
+    navbar.classList.remove('nav-open');
   });
 });
 
