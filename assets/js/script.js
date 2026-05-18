@@ -244,7 +244,12 @@ if (contactForm) {
   const submitLabel = submitBtn.querySelector('span');
   const submitIcon = submitBtn.querySelector('i');
   const formStatus = document.getElementById('formStatus');
-  const defaultButtonLabel = 'Send Message';
+  const defaultButtonState = {
+    label: 'Send Message',
+    icon: 'fas fa-paper-plane'
+  };
+  const buttonResetDelay = 3200;
+  let buttonResetTimer;
 
   function setFormStatus(message, type = '') {
     formStatus.textContent = message;
@@ -252,21 +257,68 @@ if (contactForm) {
     if (type) formStatus.classList.add(`is-${type}`);
   }
 
-  function setSubmittingState(isSubmitting) {
-    submitBtn.disabled = isSubmitting;
-    submitLabel.textContent = isSubmitting ? 'Sending...' : defaultButtonLabel;
-    submitIcon.className = isSubmitting ? 'fas fa-spinner fa-spin' : 'fas fa-paper-plane';
+  function clearButtonResetTimer() {
+    if (buttonResetTimer) {
+      window.clearTimeout(buttonResetTimer);
+      buttonResetTimer = null;
+    }
+  }
+
+  function setSubmitButtonState(state) {
+    clearButtonResetTimer();
+    submitBtn.classList.remove('is-sending', 'is-success', 'is-error');
+
+    if (state === 'sending') {
+      submitBtn.disabled = true;
+      submitBtn.classList.add('is-sending');
+      submitLabel.textContent = 'Sending...';
+      submitIcon.className = 'fas fa-spinner fa-spin';
+      return;
+    }
+
+    submitBtn.disabled = false;
+
+    if (state === 'success') {
+      submitBtn.classList.add('is-success');
+      submitLabel.textContent = 'Sent';
+      submitIcon.className = 'fas fa-check';
+      return;
+    }
+
+    if (state === 'error') {
+      submitBtn.classList.add('is-error');
+      submitLabel.textContent = 'Retry';
+      submitIcon.className = 'fas fa-rotate-right';
+      return;
+    }
+
+    submitLabel.textContent = defaultButtonState.label;
+    submitIcon.className = defaultButtonState.icon;
+  }
+
+  function resetSubmitButton() {
+    setSubmitButtonState('default');
+    setFormStatus('');
+  }
+
+  function showSubmitResult(message, type) {
+    setFormStatus(message, type);
+    setSubmitButtonState(type === 'success' ? 'success' : 'error');
+    buttonResetTimer = window.setTimeout(() => {
+      resetSubmitButton();
+    }, buttonResetDelay);
   }
 
   contactForm.addEventListener('submit', async event => {
     event.preventDefault();
+    clearButtonResetTimer();
 
     if (!navigator.onLine) {
-      setFormStatus('No internet connection. Please reconnect and try again.', 'error');
+      showSubmitResult('No internet connection. Please reconnect and try again.', 'error');
       return;
     }
 
-    setSubmittingState(true);
+    setSubmitButtonState('sending');
     setFormStatus('');
 
     try {
@@ -282,12 +334,12 @@ if (contactForm) {
 
       if (response.ok) {
         contactForm.reset();
-        setFormStatus('Message sent successfully. Thanks for reaching out.', 'success');
+        showSubmitResult('Message sent successfully. Thanks for reaching out.', 'success');
         return;
       }
 
       if (response.status === 429) {
-        setFormStatus('Sending is temporarily blocked. Please wait a moment and try again.', 'error');
+        showSubmitResult('Sending is temporarily blocked. Please wait a moment and try again.', 'error');
         return;
       }
 
@@ -298,19 +350,17 @@ if (contactForm) {
         });
 
         if (hasBlockedError) {
-          setFormStatus('Sending was blocked for safety reasons. Please try again in a little while.', 'error');
+          showSubmitResult('Sending was blocked for safety reasons. Please try again in a little while.', 'error');
           return;
         }
 
-        setFormStatus(result.errors.map(error => error.message).join(' '), 'error');
+        showSubmitResult(result.errors.map(error => error.message).join(' '), 'error');
         return;
       }
 
-      setFormStatus('Your message could not be sent right now. Please try again shortly.', 'error');
+      showSubmitResult('Your message could not be sent right now. Please try again shortly.', 'error');
     } catch (error) {
-      setFormStatus('Unable to send your message right now. Please check your connection and try again.', 'error');
-    } finally {
-      setSubmittingState(false);
+      showSubmitResult('Unable to send your message right now. Please check your connection and try again.', 'error');
     }
   });
 }
